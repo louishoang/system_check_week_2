@@ -10,3 +10,6 @@ Sinatra is needed.
 
 Note: Teams rank are sorted by points. A team get 3 points if it won a game and lose (-1) point when it lost.
 I don't know whether there is a tie game in NFL or not, that's the reason I haven't included that scenario.
+
+
+Ruby conventions are NOT fixed.
