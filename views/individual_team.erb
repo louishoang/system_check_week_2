@@ -1,0 +1,83 @@
+<h1>Team: <%= params[:team_name] %>  </h1>
+<h3>WIN  : <%= @record[0][:wins] %> -
+LOSE : <%= @record[0][:losses] %>
+</h3>
+
+<h3 style="margin-top: 60px;">Home game(s)</h3>
+<table class="table table-striped" >
+  <tr>
+    <th>Home Team</th>
+    <th colspan="2" style="text-align:center; padding-right: 50px;">
+      VS
+    </th>
+
+    <th style="text-align:right;">Away Team</th>
+  </tr>
+  <% @result_by_team.each do |result| %>
+    <tr>
+      <td>
+        <%= result[:home_team] %>
+        <span style="padding-left: 20px;">
+          <% if result[:home_score] > result[:away_score] %>
+            <span style="background-color: #85FF85">
+              <%= "WON" %>
+            </span>
+          <% else  %>
+            <span style="background-color: #FF4D4D">
+              <%= "LOST" %>
+            </span>
+          <% end %>
+        </span>
+      </td>
+      <td style="text-align:center;">
+        <%= result[:home_score] %>
+      </td>
+      <td style="text-align:center;  padding-right: 30px;">
+        <%= result[:away_score] %>
+      </td>
+      <td style="text-align:right;">
+        <%= result[:away_team] %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+
+<br>
+
+<h3>Away game(s)</h3>
+<table class="table table-striped">
+  <tr>
+    <th>Home Team</th>
+    <th colspan="2" style="text-align:right; padding-right: 75px">
+      VS
+    </th>
+
+    <th style="text-align:right;">Away Team</th>
+  </tr>
+  <% @result_by_team_away.each do |result| %>
+    <tr>
+      <td><%= result[:home_team] %></td>
+      <td style="text-align:right; padding-left: 45px">
+        <%= result[:home_score] %>
+      </td>
+      <td style="text-align:right; padding-left: 20px">
+        <%= result[:away_score] %>
+      </td>
+      <td style="text-align:right;">
+        <span style="padding-right: 20px; ">
+          <% if result[:away_score] > result[:home_score] %>
+            <span style="background-color: #85FF85">
+              <%= "WON" %>
+            </span>
+          <% else  %>
+            <span style="background-color: #FF4D4D">
+              <%= "LOST" %>
+            </span>
+          <% end %>
+        </span>
+        <%= result[:away_team] %>
+      </td>
+    </tr>
+  <% end %>
+</table>
