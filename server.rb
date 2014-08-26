@@ -2,7 +2,6 @@ require 'sinatra'
 require 'pry'
 require 'sinatra/reloader'
 
-
 results = [
   {
     home_team: "Patriots",
@@ -33,7 +32,7 @@ results = [
 #### Function start ####
 
 def winning_losing # find which team won/lost the game
-   @results.each do |result|
+  @results.each do |result|
     if result[:home_score] > result[:away_score]
       result[:winning_team] = result[:home_team]
       result[:losing_team] = result[:away_team]
@@ -43,7 +42,6 @@ def winning_losing # find which team won/lost the game
     end
   end
 end
-
 
 def team_name #get all of the teams name
   @results.each do |result|
@@ -85,10 +83,10 @@ def sort_by_point
 end
 
 def individual_team(team_name) # find each team result
-
   @result_by_team = @results.find_all do |team|
     team[:home_team] == team_name
   end
+
   @result_by_team_away = @results.find_all do |team|
     team[:away_team] == team_name
   end
@@ -113,6 +111,7 @@ get '/leaderboard' do
   stats
   count
   sort_by_point
+
   erb :leaderboard
 end
 
@@ -127,7 +126,6 @@ get '/teams/:team_name' do
 
   individual_team(params[:team_name])
   individual_record(params[:team_name])
+
   erb :individual_team
 end
-
-
