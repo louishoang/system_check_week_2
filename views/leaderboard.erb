@@ -5,11 +5,11 @@
     <th>Game(s) Won</th>
     <th>Game(s) Lost</th>
   </tr>
-  <% @stats.each do |stat| %>
+  <% @teams.each do |team| %>
   <tr>
-    <td><a href="/teams/<%= stat[:team_name] %>"><%= stat[:team_name] %></td>
-    <td style="padding-left: 40px;"><%= stat[:wins] %></td>
-    <td style="padding-left: 40px;"><%= stat[:losses] %></td>
+    <td><a href="/teams/<%= team[:team_name] %>"><%= team[:team_name] %></td>
+    <td style="padding-left: 40px;"><%= team[:wins] %></td>
+    <td style="padding-left: 40px;"><%= team[:losses] %></td>
 
   </tr>
   <% end %>
