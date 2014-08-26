@@ -43,12 +43,15 @@ def winning_losing # find which team won/lost the game
   end
 end
 
-def team_name #get all of the teams name
-  @results.each do |result|
-    @teams << result[:home_team]
-    @teams << result[:away_team]
+def team_names(results) #get all of the teams name
+  teams = []
+
+  results.each do |result|
+    teams << result[:home_team]
+    teams << result[:away_team]
   end
-  @teams.uniq!
+
+  teams.uniq!
 end
 
 def stats #initialize the hash which store information of each team
@@ -104,10 +107,9 @@ get '/' do
 end
 
 get '/leaderboard' do
-  @teams = []
   @results = results
   winning_losing
-  team_name
+  @teams = team_names(results)
   stats
   count
   sort_by_point
@@ -116,10 +118,9 @@ get '/leaderboard' do
 end
 
 get '/teams/:team_name' do
-  @teams = []
   @results = results
   winning_losing
-  team_name
+  @teams = team_names(results)
   stats
   count
   sort_by_point
