@@ -54,9 +54,9 @@ def initialize_teams(results) #initialize the hash which store information of ea
   teams.uniq
 end
 
-def count # how many times win or lose
-  @results.each do |game|
-    @teams.find do |team|
+def update_records(teams, results)# how many times win or lose
+  results.each do |game|
+    teams.find do |team|
       if game[:winning_team] == team[:team_name]
         team[:wins] += 1
       end
@@ -103,7 +103,7 @@ get '/leaderboard' do
   @results = results
   winning_losing
   @teams = initialize_teams(results)
-  count
+  update_records(@teams, results)
   sort_by_point
 
   erb :leaderboard
@@ -113,7 +113,7 @@ get '/teams/:team_name' do
   @results = results
   winning_losing
   @teams = initialize_teams(results)
-  count
+  update_records(@teams, results)
   sort_by_point
 
   individual_team(params[:team_name])
