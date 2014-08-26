@@ -43,27 +43,20 @@ def winning_losing # find which team won/lost the game
   end
 end
 
-def team_names(results) #get all of the teams name
+def initialize_teams(results) #initialize the hash which store information of each team
   teams = []
 
   results.each do |result|
-    teams << result[:home_team]
-    teams << result[:away_team]
+    teams << { team_name: result[:home_team], wins: 0, losses: 0, points: 0 }
+    teams << { team_name: result[:away_team], wins: 0, losses: 0, points: 0 }
   end
 
-  teams.uniq!
-end
-
-def stats #initialize the hash which store information of each team
-  @stats = []
-  @teams.each do |team|
-    @stats << {team_name: team, wins: 0, losses: 0, points: 0}
-  end
+  teams.uniq
 end
 
 def count # how many times win or lose
   @results.each do |game|
-    @stats.find do |team|
+    @teams.find do |team|
       if game[:winning_team] == team[:team_name]
         team[:wins] += 1
       end
@@ -78,11 +71,11 @@ def sort_by_point
   # assumption : a team gets 3 points if they win, and lose (-1) point
   # if they lose. I don't know whether there is a tie game in NFL or not :)
 
-  @stats.each do |team|
+  @teams.each do |team|
     team[:points] = (team[:wins] * 3) + (team[:losses] * (-1) )
   end
-  @stats.sort_by!{|team| team[:points] }
-  @stats.reverse!
+  @teams.sort_by!{|team| team[:points] }
+  @teams.reverse!
 end
 
 def individual_team(team_name) # find each team result
@@ -96,7 +89,7 @@ def individual_team(team_name) # find each team result
 end
 
 def individual_record(team_name) #get win/lost of each team using params
-  @record = @stats.find_all do |team|
+  @record = @teams.find_all do |team|
     team[:team_name] == team_name
   end
 end
@@ -109,8 +102,7 @@ end
 get '/leaderboard' do
   @results = results
   winning_losing
-  @teams = team_names(results)
-  stats
+  @teams = initialize_teams(results)
   count
   sort_by_point
 
@@ -120,8 +112,7 @@ end
 get '/teams/:team_name' do
   @results = results
   winning_losing
-  @teams = team_names(results)
-  stats
+  @teams = initialize_teams(results)
   count
   sort_by_point
 
